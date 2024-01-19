@@ -7,7 +7,7 @@ import { Model,
 
 import { sequelize } from "../../core";
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare readonly id: CreationOptional<string>;
     declare email: string;
     declare name: string;
@@ -38,10 +38,10 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false,
 
-        references: {
-            model: "Role",
-            key: "name"
-        }
+        // references: {
+        //     model: "Role",
+        //     key: "name"
+        // }
     }
 }, 
 {
@@ -60,3 +60,4 @@ User.init({
     freezeTableName: true
 }
 );
+
