@@ -1,30 +1,52 @@
-import { ApiError, ErrorDescription } from "../errors";
+// core/errorResponses.ts
+import { ApiError } from '../errors';
+import { ErrorDescription } from '../errors';
+import { StatusCodes } from 'http-status-codes';
 
-// error response class
-export class ErrorResponse {
-    private _statusCode: number;
-    private _description: ErrorDescription;
-    private _message: string;
+export class ErrorResponse extends Error {
+  private _statusCode: number;
+  private _details: ErrorDescription;
 
-    constructor(statusCode: number, description: ErrorDescription, message: string) {
-        this._statusCode = statusCode;
-        this._description = description;
-        this._message = message;
-    }
+  constructor(statusCode: number, details: ErrorDescription, message: string) {
+    super(message);
+    this._statusCode = statusCode;
+    this._details = details;
 
-    get statusCode(): number {
-        return this._statusCode;
-    }
+    // Set the prototype explicitly to ensure the correct prototype chain
+    Object.setPrototypeOf(this, ErrorResponse.prototype);
+  }
 
-    get description(): ErrorDescription {
-        return this._description;
-    }
+  get statusCode(): number {
+    return this._statusCode;
+  }
 
-    get message(): string {
-        return this._message;
-    }
+  get details(): ErrorDescription {
+    return this._details;
+  }
 
-    public static create(error: ApiError): ErrorResponse {
-        return new ErrorResponse(error.statusCode, error.description, error.message);
-    }
+  // Override the message property to return a formatted error message
+  override get message(): string {
+    return this.details ? `${super.message}: ${this.details[0]?.message}` : super.message;
+  }
+
+  static create(statusCode: number, details: ErrorDescription, message: string): ErrorResponse {
+    return new ErrorResponse(statusCode, details, message);
+  }
+
+  // Handle ApiError instances more explicitly
+  static fromApiError(apiError: ApiError): ErrorResponse {
+    return new ErrorResponse(apiError.statusCode, apiError.description, apiError.message);
+  }
+
+  // Example method to create a BadRequestError with a default status code and message
+  static badRequest(details: ErrorDescription, message = 'Bad Request'): ErrorResponse {
+    return new ErrorResponse(StatusCodes.BAD_REQUEST, details, message);
+  }
+
+  // Example method to create a ConflictError
+  static conflict(details: ErrorDescription, message = 'Conflict'): ErrorResponse {
+    return new ErrorResponse(StatusCodes.CONFLICT, details, message);
+  }
+
+  // Add more static methods for common error types as needed
 }

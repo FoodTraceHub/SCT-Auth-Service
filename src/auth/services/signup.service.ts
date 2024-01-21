@@ -10,7 +10,7 @@ export class SignUpService {
         private readonly _user: typeof User
     ) {}
 
-    handle = async ({ input }: IControllerArgs<AuthSignUpDto>) => {
+    handle = async ({input} : IControllerArgs<AuthSignUpDto>) => {
         try {
             if (!input) {
                 throw new BadRequestError('Input is required');
@@ -42,11 +42,17 @@ export class SignUpService {
                 role
             });
 
+            console.log(newUser);
+
             return SuccessResponse.create(StatusCodes.CREATED, newUser, 'User created successfully');
         } catch (error) {
-            // handle error here
-            if (error instanceof ErrorResponse) {
-                throw error;
+            // Handle specific error types and create appropriate ErrorResponse
+            if (error instanceof BadRequestError || error instanceof ConflictError) {
+                return ErrorResponse.create(error.statusCode, error.description, error.message);
+            } else {
+                // Log unexpected errors
+                console.error(error);
+                return ErrorResponse.create(StatusCodes.INTERNAL_SERVER_ERROR, null, 'Internal Server Error');
             }
         }
     }
