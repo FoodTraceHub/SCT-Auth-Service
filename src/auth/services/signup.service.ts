@@ -42,8 +42,6 @@ export class SignUpService {
                 role
             });
 
-            console.log(newUser);
-
             return SuccessResponse.create(StatusCodes.CREATED, newUser, 'User created successfully');
         } catch (error) {
             // Handle specific error types and create appropriate ErrorResponse
