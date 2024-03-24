@@ -1,7 +1,7 @@
 import { launchApp } from "./app/";
-import { launchDB } from "./core";
+import { connectDB } from "./core";
 
-launchDB().then(launchApp).catch(console.error);
+connectDB().then(launchApp).catch(console.error);
 
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);

@@ -1,63 +1,12 @@
-import { Model,
-    InferAttributes,
-    InferCreationAttributes,
-    CreationOptional,
-    DataTypes,
-    UUIDV4 } from "sequelize";
+import { AuthSignUpDto, AuthDocument } from "../dto";
+import { Schema, model } from "mongoose";
 
-import { sequelize } from "../../core";
-
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    declare readonly id: CreationOptional<string>;
-    declare email: string;
-    declare name: string;
-    declare password: string;
-    declare role: string;
+const AuthSchemaFields: Record<keyof AuthSignUpDto, any> = {
+    email: { type: String, required: true },
+    name: { type: String, required: true },
+    password: { type: String, required: true }
 };
 
-User.init({
-    id: {
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
-        primaryKey: true
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    role: {
-        type: DataTypes.STRING,
-        allowNull: false,
+const AuthSchema = new Schema<AuthDocument>(AuthSchemaFields);
 
-        // references: {
-        //     model: "Role",
-        //     key: "name"
-        // }
-    }
-}, 
-{
-    scopes: {
-        withoutPassword: {
-            attributes: { exclude: ["password"] }
-        }
-    },
-    defaultScope: {
-        attributes: { exclude: ["password"] }
-    },
-    modelName: "User",
-    tableName: "users",
-    sequelize,
-    timestamps: true,
-    freezeTableName: true
-}
-);
-
+export const User = model<AuthDocument>("Auth", AuthSchema);

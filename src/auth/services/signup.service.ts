@@ -16,7 +16,7 @@ export class SignUpService {
                 throw new BadRequestError('Input is required');
             }
 
-            const { email, password, name, role } = input;
+            const { email, password, name } = input;
 
             // check if user already exists
             const user = await this._user.findOne({
@@ -38,8 +38,7 @@ export class SignUpService {
             const newUser = await this._user.create({
                 email,
                 password: hashedPassword,
-                name,
-                role
+                name
             });
 
             console.log(newUser);
