@@ -1,23 +1,7 @@
-// create the error desription type
-export type ErrorDescription = Array<{
-    message: string;
-    field?: string;
-}> | null;
-
-// create the error class
-export abstract class ApiError extends Error {
-    abstract StatusCode: number;
-    abstract Description: ErrorDescription;
-    abstract Message: string;
-
-    constructor(message: string) {
+export class ApiError extends Error {
+    status: number;
+    constructor(message: string, status: number) {
         super(message);
-        this.name = this.constructor.name;
-
-        Object.setPrototypeOf(this, ApiError.prototype);
+        this.status = status;
     }
-
-    abstract get statusCode(): number;
-    abstract get description(): ErrorDescription;
-    abstract override get message(): string;
 }

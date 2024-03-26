@@ -38,11 +38,11 @@ export class SignUpService {
         } catch (error) {
             // Handle specific error types and create appropriate ErrorResponse
             if (error instanceof BadRequestError || error instanceof ConflictError) {
-                return ErrorResponse.create(error.statusCode, error.description, error.message);
+                return ErrorResponse.create(StatusCodes.BAD_REQUEST, error.message);
             } else {
                 // Log unexpected errors
                 console.error(error);
-                return ErrorResponse.create(StatusCodes.INTERNAL_SERVER_ERROR, null, 'Internal Server Error');
+                return ErrorResponse.create(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal Server Error');
             }
         }
     }

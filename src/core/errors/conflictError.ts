@@ -1,23 +1,12 @@
-import { ApiError, ErrorDescription } from "./apiError";
+import { ApiError } from "./apiError";
 import { StatusCodes } from "http-status-codes";
 
 // create the error class
 export class ConflictError extends ApiError {
-    StatusCode = StatusCodes.CONFLICT;
-    Description: ErrorDescription = null;
     Message = 'Conflict';
 
     constructor(message: string) {
-        super(message);
-        Object.setPrototypeOf(this, ConflictError.prototype);
-    }
-
-    get statusCode(): number {
-        return this.StatusCode;
-    }
-
-    get description(): ErrorDescription {
-        return this.Description;
+        super(message, StatusCodes.CONFLICT);
     }
 
     override get message(): string {
