@@ -3,9 +3,9 @@ import { StatusCodes } from "http-status-codes";
 
 // create the error class
 export class ConflictError extends ApiError {
-    _statusCode = StatusCodes.CONFLICT;
-    _description: ErrorDescription = null;
-    _message = 'Conflict';
+    StatusCode = StatusCodes.CONFLICT;
+    Description: ErrorDescription = null;
+    Message = 'Conflict';
 
     constructor(message: string) {
         super(message);
@@ -13,14 +13,14 @@ export class ConflictError extends ApiError {
     }
 
     get statusCode(): number {
-        return this._statusCode;
+        return this.StatusCode;
     }
 
     get description(): ErrorDescription {
-        return this._description;
+        return this.Description;
     }
 
     override get message(): string {
-        return this._message;
+        return this.Message;
     }
 }

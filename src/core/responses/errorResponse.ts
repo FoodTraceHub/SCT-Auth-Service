@@ -4,24 +4,24 @@ import { ErrorDescription } from '../errors';
 import { StatusCodes } from 'http-status-codes';
 
 export class ErrorResponse extends Error {
-  private _statusCode: number;
-  private _details: ErrorDescription;
+  private StatusCode: number;
+  private Details: ErrorDescription;
 
   constructor(statusCode: number, details: ErrorDescription, message: string) {
     super(message);
-    this._statusCode = statusCode;
-    this._details = details;
+    this.StatusCode = statusCode;
+    this.Details = details;
 
     // Set the prototype explicitly to ensure the correct prototype chain
     Object.setPrototypeOf(this, ErrorResponse.prototype);
   }
 
   get statusCode(): number {
-    return this._statusCode;
+    return this.StatusCode;
   }
 
   get details(): ErrorDescription {
-    return this._details;
+    return this.Details;
   }
 
   // Override the message property to return a formatted error message

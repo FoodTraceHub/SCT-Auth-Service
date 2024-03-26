@@ -3,9 +3,9 @@ import { StatusCodes } from "http-status-codes";
 
 // create the error class
 export class BadRequestError extends ApiError {
-    _statusCode = StatusCodes.BAD_REQUEST;
-    _description: ErrorDescription = null;
-    _message = 'Bad Request';
+    StatusCode = StatusCodes.BAD_REQUEST;
+    Description: ErrorDescription = null;
+    Message = 'Bad Request';
 
     constructor(message: string) {
         super(message);
@@ -13,14 +13,14 @@ export class BadRequestError extends ApiError {
     }
 
     get statusCode(): number {
-        return this._statusCode;
+        return this.StatusCode;
     }
 
     get description(): ErrorDescription {
-        return this._description;
+        return this.Description;
     }
 
     override get message(): string {
-        return this._message;
+        return this.Message;
     }
 }

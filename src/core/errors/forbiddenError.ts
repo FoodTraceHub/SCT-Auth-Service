@@ -3,9 +3,9 @@ import { StatusCodes } from "http-status-codes";
 
 // create the error class
 export class ForbiddenError extends ApiError {
-    _statusCode = StatusCodes.FORBIDDEN;
-    _description: ErrorDescription = null;
-    _message = 'Forbidden';
+    StatusCode = StatusCodes.FORBIDDEN;
+    Description: ErrorDescription = null;
+    Message = 'Forbidden';
 
     constructor(message: string) {
         super(message);
@@ -13,14 +13,14 @@ export class ForbiddenError extends ApiError {
     }
 
     get statusCode(): number {
-        return this._statusCode;
+        return this.StatusCode;
     }
 
     get description(): ErrorDescription {
-        return this._description;
+        return this.Description;
     }
 
     override get message(): string {
-        return this._message;
+        return this.Message;
     }
 }

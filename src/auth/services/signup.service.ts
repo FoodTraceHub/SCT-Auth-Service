@@ -1,7 +1,6 @@
 import { AuthSignUpDto } from "../dto";
 import { BadRequestError, ConflictError, ErrorResponse, SuccessResponse, IControllerArgs } from "../../core";
 import { StatusCodes } from "http-status-codes";
-import { Op } from "sequelize";
 import { User } from "../model";
 import { hashPassword } from "../../core";
 
@@ -19,13 +18,7 @@ export class SignUpService {
             const { email, password, name } = input;
 
             // check if user already exists
-            const user = await this._user.findOne({
-                where: {
-                    email: {
-                        [Op.eq]: email
-                    }
-                }
-            });
+            const user = await this._user.findOne({ email: email })
 
             if (user) {
                 throw new ConflictError('User already exists');
@@ -41,9 +34,7 @@ export class SignUpService {
                 name
             });
 
-            console.log(newUser);
-
-            return SuccessResponse.create(StatusCodes.CREATED, newUser, 'User created successfully');
+            return SuccessResponse.create(StatusCodes.CREATED, 'User created successfully', newUser);
         } catch (error) {
             // Handle specific error types and create appropriate ErrorResponse
             if (error instanceof BadRequestError || error instanceof ConflictError) {

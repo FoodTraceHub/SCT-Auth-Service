@@ -6,9 +6,9 @@ export type ErrorDescription = Array<{
 
 // create the error class
 export abstract class ApiError extends Error {
-    abstract _statusCode: number;
-    abstract _description: ErrorDescription;
-    abstract _message: string;
+    abstract StatusCode: number;
+    abstract Description: ErrorDescription;
+    abstract Message: string;
 
     constructor(message: string) {
         super(message);
