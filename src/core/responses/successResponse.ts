@@ -1,8 +1,18 @@
+import { ISuccessResponse, ISuccessResponseData } from './responses.dto';
+import { Response } from 'express';
+
 export class SuccessResponse {
-    constructor(public readonly statusCode: number, public readonly message: string, public readonly data: any) {}
-  
-    static create(statusCode: number, message: string, data: any): SuccessResponse {
-      return new SuccessResponse(statusCode, message, data);
+    static create(
+        res: Response,
+        status: number = 200,
+        message: string,
+        data: ISuccessResponseData
+    ): Response {
+        const response: ISuccessResponse = {
+            success: true,
+            message,
+            data,
+        };
+        return res.status(status).json(response);
     }
-  }
-  
+}
