@@ -1,6 +1,6 @@
 import { signupValidation } from "./validation";
 import { Router } from "express";
-import { signUp } from "../services";
+import { signUp } from "../../services";
 
 const authRouter = Router();
 
