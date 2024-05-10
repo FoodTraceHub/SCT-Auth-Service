@@ -1,2 +1,1 @@
-import { SignUp } from "./SignUp";
-import { User } from "../model";
+export * from './SignUp';

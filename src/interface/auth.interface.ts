@@ -1,12 +1,14 @@
 import { Document } from "mongoose";
 
-export interface AuthSignUpDto {
+export interface IAuthSignUp {
     email: string,
-    name: string;
+    first_name: string;
+    last_name: string;
+    username: string;
     password: string;
 }
 
-export interface AuthDocument extends AuthSignUpDto, Document {};
+export interface AuthDocument extends IAuthSignUp, Document {};
 export interface AuthSignInDto { 
     email: string,
     password: string

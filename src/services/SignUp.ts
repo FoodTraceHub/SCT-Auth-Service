@@ -1,19 +1,18 @@
-import { AuthSignUpDto } from '../interface';
+import { IAuthSignUp } from '../interface';
 import {
     BadRequestError,
     ConflictError,
-    IControllerArgs,
 } from '../core';
 import { User } from '../model';
 import { hashPassword } from '../core';
 
 
-export const SignUp = async (input : AuthSignUpDto) => {
+export const SignUp = async (input : IAuthSignUp) => {
     if (!input) {
         throw new BadRequestError('Input is required');
     }
 
-    const { email, password, name } = input;
+    const { email, password, username } = input;
 
     // check if user already exists
     const user = await User.findOne({ email: email });
@@ -29,7 +28,7 @@ export const SignUp = async (input : AuthSignUpDto) => {
     await User.create({
         email,
         password: hashedPassword,
-        name,
+        username,
     });
 };
 
