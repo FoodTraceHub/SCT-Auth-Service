@@ -1,4 +1,4 @@
-import { launchApp } from "./app/";
+import { launchApp } from "./server";
 import { connectDB } from "./core";
 
 connectDB().then(launchApp).catch(console.error);
