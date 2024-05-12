@@ -2,16 +2,12 @@ import { IAuthSignUp } from '../interface';
 import {
     BadRequestError,
     ConflictError,
-} from '../core';
+} from '../utils';
 import { User } from '../model';
-import { hashPassword } from '../core';
+import { hashPassword } from '../utils';
 
 
 export const SignUp = async (input : IAuthSignUp) => {
-    if (!input) {
-        throw new BadRequestError('Input is required');
-    }
-
     const { email, password, username } = input;
 
     // check if user already exists
