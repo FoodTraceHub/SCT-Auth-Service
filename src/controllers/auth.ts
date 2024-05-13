@@ -8,8 +8,8 @@ export const signUpController = async (req: Request, res: Response) => {
 
   try {
     const user: any = await SignUp(input);
-    return SuccessResponse.create(res, 201, "User created successfully", user);
+    return SuccessResponse(res, 201, "User created successfully", user);
   } catch (error: any) {
-    return ErrorResponse.create(res, 500, error.message, error);
+    return ErrorResponse(res, 500, error.message, error);
   }
 };
