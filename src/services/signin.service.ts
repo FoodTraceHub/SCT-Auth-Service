@@ -1,7 +1,7 @@
 import { IAuthSignIn } from "../interface";
 import { User } from "../model";
 import { comparePassword } from "../utils";
-import { SignToken } from "./Token";
+import { SignToken } from "./token.service";
 import { BadRequestError } from "../utils";
 
 export const UserSignIn = async (payload : IAuthSignIn) => {
